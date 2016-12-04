@@ -9,7 +9,7 @@ namespace Gabidavila\DB;
 class MemoryDB
 {
     private $storage;
-    private $available_commands = array('GET', 'SET', 'UNSET', 'NUMEQUALTO', 'FLUSH', 'END');
+    private $available_commands = array('GET', 'SET', 'UNSET', 'NUMEQUALTO', 'FLUSH', 'COUNT', 'DBSIZE', 'END');
 
     public function __construct(Storage $storage)
     {
@@ -43,6 +43,12 @@ class MemoryDB
                 return true;
             case 'FLUSH':
                 $this->storage->flush();
+                return true;
+            case 'COUNT':
+                echo $this->storage->countKeys() . PHP_EOL;
+                return true;
+            case 'DBSIZE':
+                echo strlen(serialize($this->storage)) . 'B' . PHP_EOL;
                 return true;
             case 'END':
                 return false;
