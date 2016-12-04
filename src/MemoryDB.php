@@ -19,6 +19,7 @@ class MemoryDB
     public function exec()
     {
         $handle = fopen("php://stdin", "r");
+        echo "> ";
         $line = preg_replace('/\s+/', ' ', fgets($handle));
         return $this->query($line);
     }
