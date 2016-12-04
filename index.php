@@ -8,9 +8,9 @@ $storage = new Storage();
 $db = new MemoryDB($storage);
 
 while ($execute) {
-  try {
-    $execute = $db->exec();
-  } catch (Exception $e) {
-    echo $e->getMessage() . PHP_EOL;
-  }
+    try {
+        $execute = $db->exec();
+    } catch (Exception $e) {
+        echo $e->getMessage() . PHP_EOL;
+    }
 }
