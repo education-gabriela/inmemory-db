@@ -26,6 +26,7 @@ class MemoryDB
     public function query($command)
     {
         $command = array_map('trim', explode(' ', $command));
+        $command[0] = strtoupper($command[0]);
 
         switch ($command[0]) {
             case 'SET':
