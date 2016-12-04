@@ -25,11 +25,6 @@ class Storage
         unset($this->data[$key]);
     }
 
-    public function emptyData()
-    {
-        $this->data = [];
-    }
-
     public function get($key)
     {
         if (!array_key_exists($key, $this->data)) {
@@ -51,5 +46,10 @@ class Storage
     public function flush()
     {
         $this->data = [];
+    }
+
+    public function countKeys()
+    {
+        return count($this->data);
     }
 }
