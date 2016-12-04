@@ -47,4 +47,9 @@ class Storage
     {
         return array_count_values($this->data)[$value];
     }
+
+    public function flush()
+    {
+        $this->data = [];
+    }
 }

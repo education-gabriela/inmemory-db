@@ -40,6 +40,9 @@ class MemoryDB
             case 'NUMEQUALTO':
                 echo $this->storage->countValues($command[1]) . PHP_EOL;
                 return true;
+            case 'FLUSH':
+                $this->storage->flush();
+                return true;
             case 'END':
                 return false;
                 break;
