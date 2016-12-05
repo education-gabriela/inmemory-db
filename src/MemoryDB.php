@@ -9,7 +9,7 @@ namespace Gabidavila\DB;
 class MemoryDB
 {
     private $storage;
-    private $available_commands = array('GET', 'SET', 'UNSET', 'NUMEQUALTO', 'FLUSH', 'COUNT', 'DBSIZE', 'END');
+    private $available_commands = array('GET', 'SET', 'UNSET', 'NUMEQUALTO', 'FLUSH', 'COUNT', 'DBSIZE', 'EXECUTE', 'END');
 
     public function __construct(Storage $storage)
     {
@@ -51,6 +51,9 @@ class MemoryDB
             case 'DBSIZE':
                 echo strlen(serialize($this->storage)) . 'B' . PHP_EOL;
                 return true;
+            case 'EXECUTE':
+                $this->execute($command[1]);
+                return true;
             case 'END':
                 return false;
                 break;
@@ -58,6 +61,25 @@ class MemoryDB
                 throw new \Exception('Unnable to parse the informed command: ' . implode(' ', $command) .
                     PHP_EOL . 'Available commands: ' . implode(', ', $this->available_commands));
                 return true;
+        }
+    }
+
+    private function execute($file)
+    {
+        $file = dirname(__DIR__) . '/' . $file;
+
+        if(!file_exists($file)) {
+            throw new \Exception('The file '. $file . ' does not exist');
+        }
+
+        $handle = fopen($file, 'r');
+        
+        while(!feof($handle)) {
+            $line = trim(fgets($handle));
+            if(empty($line)) {
+                continue;
+            }
+            $this->query($line);
         }
     }
 
